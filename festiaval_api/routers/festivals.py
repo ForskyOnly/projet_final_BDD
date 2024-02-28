@@ -1,10 +1,12 @@
-from fastapi import APIRouter, HTTPException, Request, Depends
+from fastapi import APIRouter, HTTPException, Request,status, Depends, Response
 from sqlalchemy.orm import Session
 from typing import List
 from database.core import NotFoundError, get_db
 from database.authentification import has_access, User
 from database.festivals import Festival, FestivalCreate, FestivalUpdate, read_db_festival, read_db_one_festival, \
     create_db_festival, update_db_festival, delete_db_festival
+from fastapi import APIRouter, Depends, HTTPException, status
+from database.core import DBFestival
 
 router = APIRouter(
     prefix="/festivals",
@@ -45,11 +47,9 @@ def update_festival(festival_id: int, festival: FestivalUpdate, db: Session = De
         raise HTTPException(status_code=404, detail=str(e))
     return db_festival
 
-
-@router.delete("/{festival_id}", response_model=Festival)
-def delete_festival(festival_id: int, db: Session = Depends(get_db), has_access: User = PROTECTED) -> Festival:
-    try:
-        db_festival = delete_db_festival(festival_id, db)
-    except NotFoundError as e:
-        raise HTTPException(status_code=404, detail=str(e))
-    return db_festival
+@router.delete("/{festival_id}", status_code=status.HTTP_204_NO_CONTENT)
+def delete_festival_endpoint(festival_id: int, db: Session = Depends(get_db)):
+    success = delete_db_festival(festival_id, db)
+    if not success:
+        raise HTTPException(status_code=404, detail="Festival not found")
+    return Response(status_code=status.HTTP_204_NO_CONTENT)

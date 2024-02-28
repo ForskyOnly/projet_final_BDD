@@ -61,8 +61,6 @@ DBCategorie.festival = relationship("DBFestival", back_populates="categorie")
 DBPeriode.festival = relationship("DBFestival", back_populates="periode")
 
 
-
-
 class DBUsers(Base):
     __tablename__ = "users"
 
