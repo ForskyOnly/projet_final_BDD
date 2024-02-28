@@ -87,7 +87,7 @@ def create_access_token(data: dict, expires_delta: timedelta = None):
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
 
-async def has_access(token: Annotated[str, Depends(oauth2_scheme)], session: Session = Depends(get_db)):
+async def has_access(token: str = Depends(oauth2_scheme), session: Session = Depends(get_db)):
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",
@@ -98,12 +98,12 @@ async def has_access(token: Annotated[str, Depends(oauth2_scheme)], session: Ses
         username: str = payload.get("sub")
         if username is None:
             raise credentials_exception
-        token_data = DBToken(username=username)
+        db_user = get_user(username=username, session=session)
+        if db_user is None:
+            raise credentials_exception
+        if db_user.disabled:
+            raise HTTPException(status_code=400, detail="Inactive user")
     except JWTError:
         raise credentials_exception
-    db_user = get_user(username=token_data.username,session=session)
-    if db_user is None:
-        raise credentials_exception
-    elif db_user.disabled:
-         raise HTTPException(status_code=400, detail="Inactive user")
+
     return True

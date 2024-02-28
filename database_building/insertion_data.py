@@ -1,11 +1,16 @@
 import sqlite3
 import csv
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
 def get_periode_id(cur, periode_value):
     """Fonction pour récupérer l'ID de la période donnée"""
     cur.execute("SELECT ID_Periode FROM PERIODE WHERE Periode = ?", (periode_value,))
     row = cur.fetchone()
     if row:
-        return row[0]  # Retourne l'ID de la période si elle existe déjà
+        return row[0] 
     else:
         return None
 
@@ -14,7 +19,7 @@ def get_categorie_id(cur, discipline_dominante, sous_categorie):
     cur.execute("SELECT ID_Categorie FROM CATEGORIE WHERE Discipline_Dominante = ? AND Sous_Categorie = ?", (discipline_dominante, sous_categorie))
     row = cur.fetchone()
     if row:
-        return row[0]  # Retourne l'ID de la catégorie si elle existe déjà
+        return row[0]  
     else:
         return None
 
@@ -23,16 +28,19 @@ def get_adresse_id(cur, adresse_postale, code_insee):
     cur.execute("SELECT ID_Adresse FROM ADRESSE WHERE Adresse_Postale = ? AND Code_INSEE = ?", (adresse_postale, code_insee))
     row = cur.fetchone()
     if row:
-        return row[0]  # Retourne l'ID de l'adresse si elle existe déjà
+        return row[0]  
     else:
         return None
 
 # Connexion à la base de données SQLite
-conn = sqlite3.connect('/home/utilisateur/Documents/dev/devia/projet_final_BDD/fesitval_france.db')
+chemin_bdd = os.getenv('CHEMIN_BDD')
+chemin_csv = os.getenv('CHEMIN_CSV')
+
+conn = sqlite3.connect(chemin_bdd)
 cur = conn.cursor()
 
 # Ouvrir le fichier CSV et insérer les données dans la table correspondante
-with open('/home/utilisateur/Documents/dev/devia/projet_final_BDD/data/clean_fest.csv', 'r', encoding='utf-8') as csvfile:
+with open(chemin_csv, 'r', encoding='utf-8') as csvfile:
     csv_reader = csv.DictReader(csvfile)
 
     for row in csv_reader:
