@@ -19,7 +19,7 @@ PROTECTED = Depends(has_access)
 def get_one_festival(festival_id: int, request: Request, db: Session = Depends(get_db)) -> Festival:
     try:
         db_festival = read_db_one_festival(festival_id, db)
-    except NotFoundError as e:
+    except NotFoundError as e:  
         raise HTTPException(status_code=404, detail=str(e))
     return db_festival
 
