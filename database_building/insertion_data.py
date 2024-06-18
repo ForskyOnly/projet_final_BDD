@@ -49,7 +49,7 @@ with open(chemin_csv, 'r', encoding='utf-8') as csvfile:
         
         # Si l'ID de l'adresse n'existe pas, insérer une nouvelle entrée dans la table ADRESSE
         if adresse_id is None:
-            cur.execute("INSERT INTO ADRESSE (Adresse_Postale, Code_INSEE, Region, Departement, Commune, Longitude, Latitude) VALUES (?, ?, ?, ?, ?, ?, ?)", (row['Adresse_Postale'], row['Code_INSEE'], row['Region'], row['Departement'], row['Commune'], row['longitude'], row['latitude']))
+            cur.execute("INSERT INTO ADRESSE (Adresse_Postale, Code_INSEE, Region, Departement, Commune, Longitude, Latitude) VALUES (?, ?, ?, ?, ?, ?, ?)", (row['Adresse_Postale'], row['Code_INSEE'], row['Region'], row['Departement'], row['Commune'], row['Longitude'], row['Latitude']))
             adresse_id = cur.lastrowid
         
         # Récupérer l'ID de la période, si elle existe déjà
