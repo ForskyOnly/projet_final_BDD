@@ -61,11 +61,11 @@ with open(chemin_csv, 'r', encoding='utf-8') as csvfile:
             periode_id = cur.lastrowid
         
         # Récupérer l'ID de la catégorie, si elle existe déjà
-        categorie_id = get_categorie_id(cur, row['Discipline_Principale'], row['Sous_Catégorie'])
+        categorie_id = get_categorie_id(cur, row['Discipline_Principale'], row['Sous_Categorie'])
 
         # Si l'ID de la catégorie n'existe pas, insérer une nouvelle entrée dans la table CATEGORIE
         if categorie_id is None:
-            cur.execute("INSERT INTO CATEGORIE (Discipline_Dominante, Sous_Categorie) VALUES (?, ?)", (row['Discipline_Principale'], row['Sous_Catégorie']))
+            cur.execute("INSERT INTO CATEGORIE (Discipline_Dominante, Sous_Categorie) VALUES (?, ?)", (row['Discipline_Principale'], row['Sous_Categorie']))
             categorie_id = cur.lastrowid
         
         # Insertion dans la table FESTIVAL en utilisant les IDs de la période, de la catégorie et de l'adresse

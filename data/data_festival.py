@@ -23,6 +23,7 @@ def charger_variables_env():
         La clé API extraite des variables d'environnement, ou None si la clé n'est pas trouvée.
     """
     load_dotenv()
+
     logging.info("Variables d'environnement chargées.")
     return os.getenv("API_KEY")
 
@@ -54,6 +55,7 @@ def recuperer_donnees_api(dataset_id, api_key):
     logging.info(f"Envoi de la requête à l'API pour le dataset {dataset_id}.")
     
     response = requests.get(url, headers=headers)
+
     if response.status_code == 200:
         try:
             logging.info("Données récupérées avec succès.")
@@ -137,11 +139,8 @@ def uniformiser_sous_categorie(value):
     """
     # Supprimer les numéros suivis d'un tiret et d'un espace (ex: "123 - ")
     value = re.sub(r'\d+\s*-\s*', '', value)
-    
-    # Supprimer les espaces au début et à la fin de la chaîne
     value = value.strip()
-    
-    # Remplacer les valeurs vides par 'Inconnu'
+
     if not value:
         return 'Inconnu'
     return value
@@ -165,42 +164,25 @@ def categoriser_periode(periode):
     str
         La catégorie de la période.
     """
-    # Si la période est NaN, retourner 'Inconnu'
     if pd.isna(periode):
         return "Inconnu"
     
-    # Convertir la période en minuscules pour faciliter les comparaisons
-    periode = periode.lower()
-    
-    # Remplacer 'avant-saison' par 'Avant-saison' pour uniformiser les données de la colonne    
+    periode = periode.lower()  
+
     if 'avant-saison' in periode:
         return 'Avant-saison'
-    
-    # CLasser les périodes en fonction des mois
     elif any(mois in periode for mois in ['janvier', 'février', 'mars', 'avril', 'mai']):
         return 'Avant-saison'
-    
-    # Remplacer 'saison' par 'Saison' pour uniformiser les données de la colonne  
     elif 'saison' in periode:
         return 'Saison'
-    
-    # CLasser les périodes en fonction des mois
     elif any(mois in periode for mois in ['juin', 'juillet', 'août', 'septembre']):
-        return 'Saison'
-    
-    # Remplacer 'après-saison' par 'Après-saison' pour uniformiser les données de la colonne 
+        return 'Saison' 
     elif 'après-saison' in periode:
         return 'Après-saison'
-    
-     # CLasser les périodes en fonction des mois
     elif any(mois in periode for mois in ['octobre', 'novembre', 'décembre']):
         return 'Après-saison'
-    
-    # Si la période contient une liste de mois, la classer comme 'Période Variable'
     elif 'janvier, février, mars, avril, mai, juin, juillet, août' in periode:
         return 'Période Variable'
-    
-    # Retourner 'Période Variable' par défaut si aucune autre condition n'est remplie
     else:
         return 'Période Variable'
     
@@ -220,17 +202,12 @@ def uniformiser_periode(period):
     str
         La chaîne de caractères uniformisée.
     """
-    # Si None, retourner None
     if period is None:
         return None
     
-    # Mettre en majuscule la première lettre de chaque mot
     period = ' '.join(word.capitalize() for word in period.split())
-    
-    # Supprimer les termes spécifiques 'avant-saison', 'saison', 'après-saison' et les parenthèses
     period = period.replace('Avant-saison', '').replace('Saison', '').replace('Après-saison', '').replace('(', '').replace(')', '')
-
-    # Supprimer les espaces au début et à la fin de la chaîne résultante
+    
     return period.strip()
 
 
@@ -251,20 +228,16 @@ def gen_adresse_depuis_coordonnees(lat, lon):
         L'adresse complète sous forme de chaîne de caractères. Retourne une chaîne vide en cas d'erreur ou si l'adresse n'est pas trouvée.
     """
     try:
-        # Construire l'URL pour la requête à l'API Nominatim
         url = f"https://nominatim.openstreetmap.org/reverse?lat={lat}&lon={lon}&format=json"
         
-        # Pause pour éviter de surcharger l'API (l'API est gratuite et a des limites de fréquence de 1seconde par requête)
+        # Pause pour éviter de surcharger l'API (l'API est gratuite mais a des limites de fréquence de 1seconde par requête)
         time.sleep(1)
         
         response = requests.get(url)
-        
-        # Vérifiez si la requête a réussi
         if response.status_code == 200:
             logging.info("Adresses récupérées avec succès.")
             json_data = response.json()
             
-            # Extraire l'adresse de la réponse JSON
             if "address" in json_data:
                 address = json_data["address"]
                 
@@ -282,10 +255,7 @@ def gen_adresse_depuis_coordonnees(lat, lon):
                 
                 return full_address
     except Exception as e:
-        # Afficher un message d'erreur en cas d'exception
         logging.error(f"Erreur lors de la récupération de l'adresse : {e}")
-    
-    # Retourner une chaîne vide si l'adresse n'est pas trouvée ou en cas d'erreur
     return ""
 
 
@@ -362,17 +332,25 @@ def nettoyer_donnees(df):
         Le DataFrame nettoyé et transformé.
     """
     logging.info("Nettoyage des données en cours.")
+    # extraire uniquement la coordonnée de latitude depuis le format {'lat': 44.773185218} dans une nouvelle colonne Latitude
     df['Latitude'] = df['Geocode'].apply(lambda x: x['lat'] if x is not None else None)
+    # extraire uniquement la coordonnée delongitude depuis le format {'lon':  -0.558212256384} dans une nouvelle colonne Longitude
     df['Longitude'] = df['Geocode'].apply(lambda x: x['lon'] if x is not None else None)
+
     df['Annee_Creation'] = df['Annee_Creation'].apply(extraire_annee).astype('Int64')
     df['Sous_Categorie'] = df['Sous_Categorie'].apply(uniformiser_sous_categorie)
     df['Categorie_Periode'] = df['Periode'].apply(categoriser_periode)
     df['Periode'] = df['Periode'].apply(uniformiser_periode)
+
     logging.info("1ere partie de nettoyage des données terminé.")
     logging.info("Debut de la récuperaion des adresses avec les coordonnées.")
+
     df['Adresse_Complete'] = df.apply(lambda row: gen_adresse_depuis_coordonnees(row['Latitude'], row['Longitude']) if not pd.isna(row['Latitude']) and not pd.isna(row['Longitude']) else "", axis=1)
-    logging.info("Récuperation des adresses términé.")
+    logging.info("Adresse récupérée avec succès.") # Si l'adresse est récupérée avec succès, pour chaque ligne du DF le message s'affiche 
+
     df = df.drop(columns=['Geocode'], axis=1)
+    
+    logging.info("Récuperation des adresses términé.")
     logging.info("Nettoyage des données terminé.")
     return df
 
