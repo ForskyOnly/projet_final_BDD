@@ -1,5 +1,5 @@
 from fastapi.testclient import TestClient
-from main import app  # Assurez-vous que votre application FastAPI est importée de main.py
+from main import app  
 import pytest
 from sqlalchemy.orm import Session
 from database.core import get_db

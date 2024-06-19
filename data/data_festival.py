@@ -38,7 +38,7 @@ def recuperer_donnees_api(dataset_id, api_key):
     forme de JSON et les retourne. En cas d'erreur, elle affiche un message d'erreur
     approprié.
 
-    Params :
+    Args :
     --------
     dataset_id : str
         L'identifiant du dataset à récupérer.
@@ -76,7 +76,7 @@ def extraire_annee(annee_str):
     de caractères en utilisant plusieurs expressions régulières pour différents formats
     d'année.
 
-    Params :
+    Args :
     --------
     annee_str : str
         La chaîne de caractères contenant l'année potentielle.
@@ -127,7 +127,7 @@ def uniformiser_sous_categorie(value):
     Nettoie la valeur de la sous-catégorie en supprimant les numéros suivis d'un tiret et d'un espace,
     et en remplaçant les valeurs vides par 'Inconnu'.
 
-    Params :
+    Args :
     --------
     value : str
         La chaîne de caractères représentant la sous-catégorie à nettoyer.
@@ -154,7 +154,7 @@ def categoriser_periode(periode):
     retourne une catégorie basée sur des mots-clés spécifiques et des mois inclus
     dans la chaîne.
 
-    Params :
+    Args :
     --------
     periode : str
         La chaîne de caractères représentant la période à catégoriser.
@@ -192,7 +192,7 @@ def uniformiser_periode(period):
     Uniformise la chaîne de caractères représentant une période en mettant en majuscule la première lettre de chaque mot,
     en supprimant les termes spécifiques et les parenthèses.
 
-    Params :
+    Args :
     --------
     period : str
         La chaîne de caractères représentant la période à uniformiser.
@@ -215,7 +215,7 @@ def gen_adresse_depuis_coordonnees(lat, lon):
     """
     Récupère une adresse complète à partir de coordonnées de latitude et de longitude en utilisant l'API Nominatim d'OpenStreetMap.
 
-    Params :
+    Args :
     --------
     lat : float
         La latitude des coordonnées.
@@ -269,7 +269,7 @@ def renommer_et_creer_colonnes(df):
     'Sous_Categorie'. Elle retourne ensuite un DataFrame avec une sélection
     spécifique de colonnes.
 
-    Params :
+    Args :
     --------
     df : pandas.DataFrame
         Le DataFrame contenant les données initiales.
@@ -321,7 +321,7 @@ def nettoyer_donnees(df):
     normalise les sous-catégories, catégorise les périodes, uniformise les périodes,
     et génère des adresses complètes à partir des coordonnées.
 
-    Params :
+    Args :
     --------
     df : pandas.DataFrame
         Le DataFrame contenant les données initiales à nettoyer.
@@ -362,7 +362,7 @@ def sauvegarder_en_csv(df, nom_fichier):
     Cette fonction prend un DataFrame en entrée et le sauvegarde dans un fichier CSV
     avec le nom de fichier spécifié.
 
-    Params :
+    Args :
     --------
     df : pandas.DataFrame
         Le DataFrame à sauvegarder.
@@ -385,7 +385,7 @@ def main():
     utilise cette clé pour récupérer les données du dataset spécifié via l'API,
     nettoie et transforme ces données, puis les sauvegarde dans un fichier CSV.
 
-    Params :
+    Args :
     --------
     None
 
@@ -402,7 +402,7 @@ def main():
         df = pd.DataFrame(donnees)
         df_renomme = renommer_et_creer_colonnes(df)
         df_nettoye = nettoyer_donnees(df_renomme)
-        sauvegarder_en_csv(df_nettoye, 'clean_festival_data.csv')
+        sauvegarder_en_csv(df_nettoye, 'data/clean_festival_data.csv')
     logging.info("Fin de l'exécution du script.")
 
 if __name__ == "__main__":
