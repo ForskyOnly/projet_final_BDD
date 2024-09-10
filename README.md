@@ -32,7 +32,7 @@ Pour installer ce projet, suivez les étapes suivantes :
 
 1. Clonez ce dépôt sur votre machine locale :
    ```
-   git clone https://github.com/ForslyONly/api-festivals.git
+   git clone https://github.com/ForskyOnly/projet_final_BDD
    ```
 
 2. Naviguez jusqu'au répertoire du projet :
