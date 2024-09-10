@@ -14,12 +14,15 @@ L'API des Festivals est une application FastAPI robuste conçue pour gérer et f
 
 ## 📥 Récupération et traitement des données
 
- ### Exécutez le script d'automatisation pour reccupérer, nettoyer et compléter les données :
+1. Téléchargez les données brutes depuis le [site officiel du Ministère de la Culture](https://data.culture.gouv.fr/explore/dataset/festivals-global-festivals-_-pl/information/) au format CSV.
+
+2. Placez le fichier CSV téléchargé dans le dossier `data` du projet.
+
+3. Exécutez le script d'automatisation pour nettoyer et compléter les données :
    ```
    ./automate.sh
    ```
    Ce script va :
-   - Récupérer les données brutes depuis l'API de données gouvernementales
    - Nettoyer les données brutes
    - Compléter les adresses manquantes via une API de géocodage
    - Préparer les données pour l'importation dans la base de données
@@ -77,8 +80,8 @@ Les contributions sont les bienvenues ! Pour contribuer :
 
 1. Forkez le projet
 2. Créez votre branche de fonctionnalité (`git checkout -b feature/VotreFeature`)
-3.Committez vos changements (`git commit -m 'Ajout de VotreFeature'`)
-4. Poussez vers la branche (`git push origin feature/VotreFeature`)
+3. Committ
+4. Poussez vers la branche 
 5. Ouvrez une Pull Request
 
 ## Licence
