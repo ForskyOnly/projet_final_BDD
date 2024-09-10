@@ -1,7 +1,7 @@
 from typing import List, Optional
 from pydantic import BaseModel
 from sqlalchemy.orm import Session, joinedload
-from .core import DBFestival, DBAdresse, DBPeriode, DBCategorie, NotFoundError
+from .db_core import DBFestival, DBAdresse, DBPeriode, DBCategorie, NotFoundError
 
 # Les classes de modèles pour l'API
 from pydantic import BaseModel
@@ -96,7 +96,7 @@ def create_db_festival(festival_data: FestivalCreate, session: Session) -> DBFes
     return db_festival
 
 def update_db_festival(festival_id: int, festival_data: FestivalUpdate, session: Session) -> DBFestival:
-    db_festival = session.query(DBFestival).get(festival_id)
+    db_festival = session.query(DBFestival).filter(DBFestival.id_festival == festival_id).first()
     if not db_festival:
         raise NotFoundError(f"Festival with id {festival_id} not found.")
 
@@ -111,26 +111,26 @@ def update_db_festival(festival_id: int, festival_data: FestivalUpdate, session:
     # Mise à jour de l'adresse
     if festival_data.adresse:
         if db_festival.adresse:
-            for key, value in festival_data.adresse.model_dump(exclude_none=True).items():
+            for key, value in festival_data.adresse.dict(exclude_unset=True).items():
                 setattr(db_festival.adresse, key, value)
         else:
-            db_festival.adresse = DBAdresse(**festival_data.adresse.model_dump())
+            db_festival.adresse = DBAdresse(**festival_data.adresse.dict())
 
     # Mise à jour de la catégorie
     if festival_data.categorie:
         if db_festival.categorie:
-            for key, value in festival_data.categorie.model_dump(exclude_none=True).items():
+            for key, value in festival_data.categorie.dict(exclude_unset=True).items():
                 setattr(db_festival.categorie, key, value)
         else:
-            db_festival.categorie = DBCategorie(**festival_data.categorie.model_dump())
+            db_festival.categorie = DBCategorie(**festival_data.categorie.dict())
 
     # Mise à jour de la période
     if festival_data.periode:
         if db_festival.periode:
-            for key, value in festival_data.periode.model_dump(exclude_none=True).items():
+            for key, value in festival_data.periode.dict(exclude_unset=True).items():
                 setattr(db_festival.periode, key, value)
         else:
-            db_festival.periode = DBPeriode(**festival_data.periode.model_dump())
+            db_festival.periode = DBPeriode(**festival_data.periode.dict())
 
     session.commit()
     session.refresh(db_festival)

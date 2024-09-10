@@ -1,18 +1,21 @@
-from fastapi import APIRouter, HTTPException, Request,status, Depends, Response
+from fastapi import APIRouter, HTTPException, Request, status, Depends, Response
+from ..database import db_authentification
 from sqlalchemy.orm import Session
 from typing import List
-from database.core import NotFoundError, get_db
-from database.authentification import has_access, User
-from database.festivals import Festival, FestivalCreate, FestivalUpdate, read_db_festival, read_db_one_festival, \
+from ..database.db_core import NotFoundError, get_db
+from ..database.db_authentification import User
+from ..database.db_festivals import Festival, FestivalCreate, FestivalUpdate, read_db_festival, read_db_one_festival, \
     create_db_festival, update_db_festival, delete_db_festival
 from fastapi import APIRouter, Depends, HTTPException, status
-from database.core import DBFestival
+from ..database.db_core import DBFestival
+from ..database.db_authentification import has_access
 
 router = APIRouter(
     prefix="/festivals",
 )
 
-PROTECTED = Depends(has_access)
+PROTECTED = Depends(db_authentification.has_access)
+
 
 
 @router.get("/{festival_id}", response_model=Festival)

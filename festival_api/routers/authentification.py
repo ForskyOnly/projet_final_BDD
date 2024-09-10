@@ -4,20 +4,38 @@ from fastapi.params import Depends
 from sqlalchemy.orm import Session
 from typing import List, Annotated
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
-from database.core import get_db
-from database.authentification import Token, User, UserCreate, authenticate_user, create_db_user, ACCESS_TOKEN_EXPIRE_MINUTES, create_access_token, has_access
+from ..database.db_core import get_db, DBUsers
+from ..database.db_authentification import Token, User, UserCreate, authenticate_user, create_db_user, ACCESS_TOKEN_EXPIRE_MINUTES, create_access_token, get_password_hash
+from festival_api.database.auth_utils import has_access
+from festival_api.main import app  
+
+
+
 
 router = APIRouter(
     prefix="/auth",
 )
 
+@router.post("/create_user", response_model=User)
+def create_user(user: UserCreate, db: Session = Depends(get_db)):
+    db_user = create_db_user(user, db)
+    return db_user
+
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/token")
 
 
-@router.post("/create_user")
-def create_user(request: Request, customer: UserCreate, db: Session = Depends(get_db)) -> User:
-    db_customer = create_db_user(customer, db)
-    return User(**db_customer.__dict__)
+def create_db_user(user: UserCreate, session: Session):
+    hashed_password = get_password_hash(user.password)
+    db_user = DBUsers(
+        username=user.username,
+        email=user.email,
+        full_name=user.full_name,
+        hashed_password=hashed_password
+    )
+    session.add(db_user)
+    session.commit()
+    session.refresh(db_user)
+    return db_user
 
 
 @router.post("/token")
