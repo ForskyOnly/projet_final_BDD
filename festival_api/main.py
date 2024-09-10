@@ -1,4 +1,5 @@
 from fastapi import FastAPI, APIRouter
+from .database.db_core import get_db
 
 app = FastAPI()
 
