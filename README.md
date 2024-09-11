@@ -85,6 +85,7 @@ Voici les variables d'environnement à configurer dans votre fichier `.env` :
 - `INSERTION_SCRIPT` : Chemin absolu vers le script d'insertion des données dans la base + /insertion_data.sql
 - `DATABASE_PATH` : Chemin absolu vers le fichier de base de données, identique à CHEMIN_BDD
 
+
 3. Naviguez jusqu'au répertoire du projet :
    ```
    cd api-festivals
@@ -101,9 +102,8 @@ Voici les variables d'environnement à configurer dans votre fichier `.env` :
    pip install -r requirements.txt
    ```
 
-6. Récupération et traitement des données
+6. Exécutez le script d'automatisation pour récuperer, nettoyer et compléter les données :
 
- Exécutez le script d'automatisation pour la récuperer, nettoyer et compléter les données :
    ```
    ./automate.sh
    ```
