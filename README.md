@@ -74,7 +74,7 @@ Pour installer ce projet, suivez les étapes suivantes :
 
 Voici les variables d'environnement à configurer dans votre fichier `.env` :
 
-- `CLE_API` : Votre clé API pour accéder aux données de géocode (GRATUIT)
+- `CLE_API` : Votre clé API pour accéder aux données de géocode, obtenez la gratuitement sur `https://nominatim.openstreetmap.org/`
 - `CHEMIN_BDD` : Chemin absolu vers votre fichier de base de données SQLite + /festival_france.db
 - `CHEMIN_CSV` : Chemin absolu vers le fichier CSV contenant les données nettoyées des festivals + /clean_festival_data.csv
 - `SECRET_KEY` : Clé secrète pour la sécurité de l'application, doit être une chaîne aléatoire
@@ -110,7 +110,7 @@ Voici les variables d'environnement à configurer dans votre fichier `.env` :
    Ce script va :
    - Récuperer les données brutes depuis l'API du site data.culture.gouv.fr
    - Nettoyer les données brutes
-   - Compléter les adresses manquantes via une API de géocodage
+   - Compléter les adresses manquantes via une API de Nominatim `https://nominatim.openstreetmap.org/` (processus un peu long due aux limitations de l'API prévoir 2 à 3 heures)
    - Préparer les données pour l'importation dans la base de données
    - Importer les données dans la base de données
 
