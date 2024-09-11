@@ -6,7 +6,6 @@ L'API des Festivals est une application FastAPI conçue pour gérer et fournir d
 
 ## 🗂️ Structure du projet
 
-Voici une explication des principaux fichiers et dossiers de notre API de festival :
 
 ### 📁 Fichiers racine
 
