@@ -87,16 +87,16 @@ Pour installer ce projet, suivez les étapes suivantes :
 
 Voici les variables d'environnement à configurer dans votre fichier `.env` :
 
-   CLE_API=<Votre clé API pour accéder aux données de géocode (GRATUIT)>
-   CHEMIN_BDD=<Chemin absolu vers votre fichier de base de données SQLite + /festival_france.db>
-   CHEMIN_CSV=<Chemin absolu vers le fichier CSV contenant les données nettoyées des festivals + /clean_festival_data.csv>
-   SECRET_KEY=<Clé secrète pour la sécurité de l'application, doit être une chaîne aléatoire>
-   DATABASE_URL=<URL de connexion à la base de données, identique à CHEMIN_BDD pour SQLite>
-   ALGORITHM=HS256 # Algorithme de cryptage utilisé par fastapi-jwt-auth
-   DATA_FESTIVAL_SCRIPT=<Chemin absolu vers le script de traitement des données des festivals + /data_festival.py>
-   SQL_SCRIPT=<Chemin absolu vers le script SQL de création de la base de données + /script.sql>
-   INSERTION_SCRIPT=<Chemin absolu vers le script d'insertion des données dans la base + /insertion_data.sql>
-   DATABASE_PATH=<Chemin absolu vers le fichier de base de données, identique à CHEMIN_BDD>
+- `CLE_API` : Votre clé API pour accéder aux données de géocode (GRATUIT)
+- `CHEMIN_BDD` : Chemin absolu vers votre fichier de base de données SQLite + /festival_france.db
+- `CHEMIN_CSV` : Chemin absolu vers le fichier CSV contenant les données nettoyées des festivals + /clean_festival_data.csv
+- `SECRET_KEY` : Clé secrète pour la sécurité de l'application, doit être une chaîne aléatoire
+- `DATABASE_URL` : URL de connexion à la base de données, identique à CHEMIN_BDD pour SQLite
+- `ALGORITHM` : HS256 (Algorithme de cryptage utilisé par fastapi-jwt-auth)
+- `DATA_FESTIVAL_SCRIPT` : Chemin absolu vers le script de traitement des données des festivals + /data_festival.py
+- `SQL_SCRIPT` : Chemin absolu vers le script SQL de création de la base de données + /script.sql
+- `INSERTION_SCRIPT` : Chemin absolu vers le script d'insertion des données dans la base + /insertion_data.sql
+- `DATABASE_PATH` : Chemin absolu vers le fichier de base de données, identique à CHEMIN_BDD
 
 2. Naviguez jusqu'au répertoire du projet :
    ```
