@@ -2,7 +2,56 @@
 
 ## 📖 Description
 
-L'API des Festivals est une application FastAPI robuste conçue pour gérer et fournir des informations sur divers festivals. Elle offre une interface RESTful pour créer, lire, mettre à jour et supprimer des données de festivals, ainsi que des fonctionnalités d'authentification pour sécuriser l'accès.
+L'API des Festivals est une application FastAPI conçue pour gérer et fournir des informations sur divers festivals. Elle offre une interface RESTful pour créer, lire, mettre à jour et supprimer (CRUD)des données de festivals, ainsi que des fonctionnalités d'authentification pour sécuriser l'accès.
+
+## 🗂️ Structure du projet
+
+Voici une explication des principaux fichiers et dossiers de notre API de festival :
+
+### 📁 Fichiers racine
+
+- `main.py` : 🚀 Point d'entrée de l'application. Configure et lance l'API FastAPI.
+- `requirements.txt` : 📋 Liste toutes les dépendances Python nécessaires au projet.
+- `automate.sh` : 🚀 Script pour automatiser la récupération, le nettoyage et la complétion des données des festivals.
+- `.env` : 🔑 Fichier pour stocker les variables d'environnement.
+- `.gitignore` : 📂 Liste des fichiers et dossiers à ignorer lors du commit (comme les fichiers env ou la base de données).
+
+### 📁 Dossier `database_building`
+
+Ce dossier contient les scripts SQL et les données d'insertion pour la base de données.
+
+- `script.sql` : 🛠️ Script SQL pour la création de la structure de la base de données.
+- `insertion_data.sql` : 💾 Script SQL pour l'insertion des données initiales.
+
+### 📁 Dossier `data`
+
+- `data_festival.py` : 🎭 Récupère, nettoie, enrichit et sauvegarde les données des festivals, servant de pipeline ETL pour préparer les informations essentielles à notre application.
+- `clean_data_festival.csv` : 🧹 Fichier CSV où nous avons stockée les données des festivals nettoyées et complétées.
+- Fichiers `.ipynb` : 📊 Notebooks Jupyter sur lesquels nous avons préalablement travaillé pour l'analyse et le nettoyage de données avant d'automatiser le processus en script.
+
+### 📁 Dossier `festival_api`
+
+- `main.py` : 🌟 Fichier principal de l'API FastAPI.
+- `models.py` : 🏗️ Définit les modèles de données pour l'API.
+
+#### 📁 Sous-dossier `database`
+
+- `auth_utils.py` : 🔐 Utilitaires pour l'authentification et l'autorisation.
+- `db_auth.py` : 🔑 Gestion de l'authentification dans la base de données.
+- `db_core.py` : 🧰 Fonctions de base pour interagir avec la base de données.
+- `db_festival.py` : 🎪 Fonctions spécifiques pour gérer les données du festival dans la base de données.
+
+#### 📁 Sous-dossier `routers`
+
+- `authentification.py` : 🚪 Gère les routes liées à l'authentification (login, création d'utilisateur).
+- `festivals.py` : 🎉 Contient les routes pour la gestion des événements du festival.
+
+### 📁 Dossier `tests`
+
+Contient les tests pour l'API et la base de données.
+
+- `test_authentification.py` : 🧪 Tests pour les fonctionnalités d'authentification.
+- `test_db.py` : 🔍 Tests pour les opérations de base de données.
 
 ## 🚀 Fonctionnalités
 

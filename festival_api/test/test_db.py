@@ -10,6 +10,10 @@ from festival_api.database.db_festivals import create_db_festival, update_db_fes
 
 @pytest.fixture(scope="function")
 def db():
+    """
+    Cette fonction est un fixture pour la base de données de test.
+    Elle crée une nouvelle session de base de données pour les tests.
+    """
     db = SessionLocal()
     Base.metadata.create_all(bind=db.bind)
     try:
@@ -20,6 +24,9 @@ def db():
         db.close()
 
 def test_create_user(db: Session):
+    """
+    Cette fonction est un test pour créer un nouvel utilisateur dans la base de données.
+    """
     user_data = UserCreate(username="testuser", email="test@example.com", password="testpassword")
     new_user = create_db_user(user_data, db)
     
@@ -28,6 +35,9 @@ def test_create_user(db: Session):
     assert new_user.hashed_password != "testpassword"
 
 def test_get_user(db: Session):
+    """
+    Cette fonction est un test pour récupérer un utilisateur dans la base de données.
+    """
     user_data = UserCreate(username="testuser2", email="test2@example.com", password="testpassword2")
     create_db_user(user_data, db)
     
@@ -37,6 +47,9 @@ def test_get_user(db: Session):
     assert retrieved_user.email == "test2@example.com"
 
 def test_create_festival(db: Session):
+    """
+    Cette fonction est un test pour créer un nouvel festival dans la base de données.
+    """
     festival_data = FestivalCreate(
         nom_festival="Festival de Test",
         annee_creation=2023,
@@ -69,6 +82,9 @@ def test_create_festival(db: Session):
     assert new_festival.periode.periode == "Été"
 
 def test_get_festival(db: Session):
+    """
+    Cette fonction est un test pour récupérer un festival dans la base de données.
+    """
     festival_data = FestivalCreate(
         nom_festival="Festival de Récupération",
         annee_creation=2024,
@@ -99,6 +115,9 @@ def test_get_festival(db: Session):
     assert retrieved_festival.annee_creation == 2024
 
 def test_update_festival(db: Session):
+    """
+    Cette fonction est un test pour mettre à jour un festival dans la base de données.
+    """
     festival_data = FestivalCreate(
         nom_festival="Festival à Mettre à Jour",
         annee_creation=2025,
@@ -156,6 +175,9 @@ def test_update_festival(db: Session):
 
 
 def test_delete_festival(db: Session):
+    """
+    Cette fonction est un test pour supprimer un festival dans la base de données.
+    """
     festival_data = FestivalCreate(
         nom_festival="Festival à Supprimer",
         annee_creation=2027,

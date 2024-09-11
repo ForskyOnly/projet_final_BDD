@@ -14,8 +14,16 @@ app.include_router(authentification.router)
 
 @app.get("/")
 def read_root():
+    """
+    Cette fonction est la racine de l'application.
+    Elle renvoie un message pour indiquer que le serveur est en cours d'exécution.
+    """
     return "Server is running."
 
 if __name__ == "__main__":
+    """
+    Cette bloc est le point d'entrée de l'application.
+    Il démarre le serveur FastAPI avec uvicorn.
+    """
     import uvicorn
     uvicorn.run(app, host="127.0.0.1", port=8000)

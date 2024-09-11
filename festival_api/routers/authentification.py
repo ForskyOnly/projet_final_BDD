@@ -18,6 +18,10 @@ router = APIRouter(
 
 @router.post("/create_user", response_model=User)
 def create_user(user: UserCreate, db: Session = Depends(get_db)):
+    """
+    Cette fonction crée un nouvel utilisateur dans la base de données.
+    C'est comme enregistrer un nouveau participant dans le grand livre du festival !
+    """
     db_user = create_db_user(user, db)
     return db_user
 
@@ -25,6 +29,10 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/token")
 
 
 def create_db_user(user: UserCreate, session: Session):
+    """
+    Cette fonction crée un nouvel utilisateur dans la base de données.
+    C'est comme enregistrer un nouveau participant dans le grand livre du festival !
+    """
     hashed_password = get_password_hash(user.password)
     db_user = DBUsers(
         username=user.username,
@@ -42,7 +50,10 @@ def create_db_user(user: UserCreate, session: Session):
 async def login_for_access_token(form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
         request: Request,
         db: Session = Depends(get_db)) -> Token:    
-    
+    """
+    Cette fonction permet à un utilisateur de se connecter et de recevoir un jeton d'accès.
+    C'est comme obtenir une clé pour ouvrir une porte de vérification !
+    """
     user = authenticate_user(db, form_data.username, form_data.password)
     if not user:
         raise HTTPException(
@@ -60,4 +71,8 @@ async def login_for_access_token(form_data: Annotated[OAuth2PasswordRequestForm,
 
 @router.get("/is_authorized", response_model=None)
 async def is_authorized(current_user: Annotated[User, Depends(has_access)]):
+    """
+    Cette fonction vérifie si l'utilisateur est autorisé à accéder à une ressource.
+    C'est comme vérifier si vous avez le droit d'entrer dans une pièce spécifique !
+    """
     return True

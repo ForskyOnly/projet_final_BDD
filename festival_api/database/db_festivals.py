@@ -45,6 +45,10 @@ class FestivalUpdate(FestivalBase):
 
 # Fonctions pour interagir avec la base de données
 def read_db_one_festival(id_festival: int, session: Session) -> DBFestival:
+    """
+    Cette fonction récupère un festival spécifique de la base de données.
+    C'est comme trouver un événement spécifique dans le calendrier du festival !
+    """
     db_festival = session.query(DBFestival).options(
         joinedload(DBFestival.adresse),
         joinedload(DBFestival.categorie),
@@ -56,6 +60,10 @@ def read_db_one_festival(id_festival: int, session: Session) -> DBFestival:
     return db_festival
 
 def read_db_festival(session: Session) -> List[DBFestival]:
+    """
+    Cette fonction récupère les 5 premiers festivals de la base de données.
+    C'est comme regarder les 5 premiers événements dans le calendrier du festival !
+    """
     db_festivals = session.query(DBFestival).options(
         joinedload(DBFestival.adresse),
         joinedload(DBFestival.categorie),
@@ -67,10 +75,18 @@ def read_db_festival(session: Session) -> List[DBFestival]:
     return db_festivals
 
 def generate_id(session: Session) -> int:
+    """
+    Cette fonction génère un nouvel identifiant pour un festival.
+    C'est comme attribuer un numéro à un nouvel événement dans le calendrier du festival !
+    """
     last_id = session.query(DBFestival.id_festival).order_by(DBFestival.id_festival.desc()).first()
     return last_id[0] + 1 if last_id else 1  
 
 def create_db_festival(festival_data: FestivalCreate, session: Session) -> DBFestival:
+    """
+    Cette fonction crée un nouvel enregistrement de festival dans la base de données.
+    C'est comme ajouter un nouvel événement dans le calendrier du festival !
+    """
     id_festival = generate_id(session)
     
     # Créer les instances des relations à partir des données fournies
@@ -96,6 +112,10 @@ def create_db_festival(festival_data: FestivalCreate, session: Session) -> DBFes
     return db_festival
 
 def update_db_festival(festival_id: int, festival_data: FestivalUpdate, session: Session) -> DBFestival:
+    """
+    Cette fonction met à jour les informations d'un festival existant dans la base de données.
+    C'est comme modifier les informations d'un événement déjà planifié !
+    """
     db_festival = session.query(DBFestival).filter(DBFestival.id_festival == festival_id).first()
     if not db_festival:
         raise NotFoundError(f"Festival with id {festival_id} not found.")
@@ -144,4 +164,3 @@ def delete_db_festival(festival_id: int, db: Session) -> bool:
     db.commit()
     return True  # Le festival a été supprimé avec succès
 
-# Note: Il est important de gérer les relations et les suppressions en cascade via la configuration de SQLAlchemy si nécessaire.
