@@ -12,7 +12,7 @@ Voici une explication des principaux fichiers et dossiers de notre API de festiv
 
 - `main.py` : 🚀 Point d'entrée de l'application. Configure et lance l'API FastAPI.
 - `requirements.txt` : 📋 Liste toutes les dépendances Python nécessaires au projet.
-- `automate.sh` : 🚀 Script pour automatiser la récupération, le nettoyage et la complétion des données des festivals.
+- `automate.sh` : 🚀 Script pour automatiser la récupération, le nettoyage et la complétion des données de Festivals, suivi de la création des tables de la base de données et de l'insertion des données.
 - `.env` : 🔑 Fichier pour stocker les variables d'environnement.
 - `.gitignore` : 📂 Liste des fichiers et dossiers à ignorer lors du commit (comme les fichiers env ou la base de données).
 
