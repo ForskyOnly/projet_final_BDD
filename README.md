@@ -11,7 +11,7 @@ L'API des Festivals est une application FastAPI conçue pour gérer et fournir d
 
 - `main.py` : 🚀 Point d'entrée de l'application. Configure et lance l'API FastAPI.
 - `requirements.txt` : 📋 Liste toutes les dépendances Python nécessaires au projet.
-- `automate.sh` : 🚀 Script pour automatiser la récupération, le nettoyage et la complétion des données de Festivals, suivi de la création des tables de la base de données et de l'insertion des données.
+- `automate.sh` : 🚀 Script pour automatiser la récupération, le nettoyage et la complétion des données de Festivals, suivi de la création des tables de la base de données et de l'insertion des données dans celle ci.
 - `.env` : 🔑 Fichier pour stocker les variables d'environnement.
 
 
@@ -60,19 +60,6 @@ Contient les tests pour l'API et la base de données.
 - 🎨 Catégorisation des festivals
 - 📅 Gestion des périodes de festivals
 
-## 📥 Récupération et traitement des données
-
- Exécutez le script d'automatisation pour la récuperer, nettoyer et compléter les données :
-   ```
-   ./automate.sh
-   ```
-   Ce script va :
-   - Récuperer les données brutes depuis l'API du site data.culture.gouv.fr
-   - Nettoyer les données brutes
-   - Compléter les adresses manquantes via une API de géocodage
-   - Préparer les données pour l'importation dans la base de données
-   - Importer les données dans la base de données
-
 
 ## 🛠️ Installation
 
@@ -98,21 +85,34 @@ Voici les variables d'environnement à configurer dans votre fichier `.env` :
 - `INSERTION_SCRIPT` : Chemin absolu vers le script d'insertion des données dans la base + /insertion_data.sql
 - `DATABASE_PATH` : Chemin absolu vers le fichier de base de données, identique à CHEMIN_BDD
 
-2. Naviguez jusqu'au répertoire du projet :
+3. Naviguez jusqu'au répertoire du projet :
    ```
    cd api-festivals
    ```
 
-3. Créez un environnement virtuel et activez-le :
+4. Créez un environnement virtuel et activez-le :
    ```
    python -m venv venv
    source venv/bin/activate  # Sur Windows, utilisez `venv\Scripts\activate`
    ```
 
-4. Installez les dépendances nécessaires :
+5. Installez les dépendances nécessaires :
    ```
    pip install -r requirements.txt
    ```
+
+6. Récupération et traitement des données
+
+ Exécutez le script d'automatisation pour la récuperer, nettoyer et compléter les données :
+   ```
+   ./automate.sh
+   ```
+   Ce script va :
+   - Récuperer les données brutes depuis l'API du site data.culture.gouv.fr
+   - Nettoyer les données brutes
+   - Compléter les adresses manquantes via une API de géocodage
+   - Préparer les données pour l'importation dans la base de données
+   - Importer les données dans la base de données
 
 ## 🖥️ Utilisation
 
