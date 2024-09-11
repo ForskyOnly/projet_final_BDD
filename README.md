@@ -11,7 +11,7 @@ L'API des Festivals est une application FastAPI conçue pour gérer et fournir d
 
 - `main.py` : 🚀 Point d'entrée de l'application. Configure et lance l'API FastAPI.
 - `requirements.txt` : 📋 Liste toutes les dépendances Python nécessaires au projet.
-- `automate.sh` : 🚀 Script pour automatiser la récupération, le nettoyage et la complétion des données de Festivals, suivi de la création des tables de la base de données et de l'insertion des données dans celle ci.
+- `automate.sh` : 🚀 Script pour automatiser la récupération, le nettoyage et la complétion des données de festivals, suivi de la création des tables de la base de données et de l'insertion des données dans celle ci.
 - `.env` : 🔑 Fichier pour stocker les variables d'environnement.
 
 
@@ -20,7 +20,7 @@ L'API des Festivals est une application FastAPI conçue pour gérer et fournir d
 Ce dossier contient les scripts SQL et les données d'insertion pour la base de données.
 
 - `script.sql` : 🛠️ Script SQL pour la création de la structure de la base de données.
-- `insertion_data.sql` : 💾 Script SQL pour l'insertion des données initiales.
+- `insertion_data.py` : 💾 Script python pour l'insertion des données initiales.
 
 ### 📁 Dossier `data`
 
