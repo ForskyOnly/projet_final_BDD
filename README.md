@@ -110,7 +110,7 @@ Voici les variables d'environnement à configurer dans votre fichier `.env` :
    Ce script va :
    - Récuperer les données brutes depuis l'API du site data.culture.gouv.fr `https://data.culture.gouv.fr/api/v2/catalog/datasets/festivals-global-festivals-_-pl/`
    - Nettoyer les données brutes
-   - Compléter les adresses manquantes via une API de Nominatim `https://nominatim.openstreetmap.org/` (processus un peu long due aux limitations de l'API prévoir 2 à 3 heures)
+   - Compléter les adresses manquantes via l'API de Nominatim `https://nominatim.openstreetmap.org/` (processus un peu long due aux limitations de l'API prévoir 2 à 3 heures)
    - Préparer les données pour l'importation dans la base de données
    - Importer les données dans la base de données
 
