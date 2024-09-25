@@ -12,7 +12,7 @@ JOIN ADRESSE a ON f.ID_Adresse = a.ID_Adresse
 GROUP BY a.Region
 ORDER BY Nombre_Festivals DESC;
 
--- Requête 3 : Trouver les festivals de musique qui se déroulent en été
+-- Requête 3 : Trouver les festivals de musique qui se déroulent en été regroupés par région et ville
 SELECT f.Nom_Festival, p.Periode, c.Sous_Categorie, a.Commune, a.Region
 FROM FESTIVAL f
 JOIN PERIODE p ON f.ID_Periode = p.ID_Periode
